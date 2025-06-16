@@ -2,5 +2,4 @@
   become: yes
   hosts:  mongodb
   roles:  
-  - mongodb
-  
+    - mongodb
