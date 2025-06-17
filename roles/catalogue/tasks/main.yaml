@@ -1,0 +1,58 @@
+
+
+- name: app setup
+  include_role:
+      name: common
+      tasks_from: app-setup
+
+- name: disbaling default node js
+  ansible.builtin.command: dnf module disable nodejs -y
+
+- name: enable nodejs 
+  ansible.builtin.command: dnf module enable nodejs:20 -y
+
+- name: install nodejs
+  ansible.builtin.dnf:
+    name: nodejs
+    state: present
+
+
+- name: Install packages based on package.json.
+  community.general.npm:
+    path: /app
+
+- name: copy the mongo service
+  ansible.builtin.copy:
+    src: catalogue.service
+    dest: /etc/systemd/system/catalogue.service
+
+- name: just for reload
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+
+- name: start and enable catalougue
+  ansible.builtin.service:
+    name: catalogue
+    state: started
+    enabled: yes
+
+- name: copy mongodb repo
+  ansible.builtin.copy:
+    src: mongo.repo
+    dest: /etc/yum.repos.d/mongo.repo
+
+- name: install mongodb client
+  ansible.builtin.dnf:
+    name: mongodb-mongosh
+    state:  present
+
+
+- name: load products
+  ansible.builtin.shell: mongosh --host  mongodb.chinni.fun < /app/db/master-data.js
+  
+
+
+
+
+
+
