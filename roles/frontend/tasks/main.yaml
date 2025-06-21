@@ -1,6 +1,6 @@
 - name: disabling nginx
   ansible.builtin.command:  dnf module disable nginx -y
-  
+
 - name: Remove default nginx configuration
   ansible.builtin.command:  dnf module enable nginx:1.24 -y
 
@@ -25,8 +25,6 @@
     path: /usr/share/nginx/html/
     state: directory
   
-
-
 - name: Download a frontend content
   ansible.builtin.get_url:
     url: https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
@@ -47,6 +45,6 @@
   ansible.builtin.template:
     src: nginx.conf.j2
     dest: /etc/nginx/nginx.conf
-  notify:
+  handlers:
     - Restart nginx
   
