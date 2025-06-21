@@ -1,7 +1,9 @@
 CATALOGUE_HOST: catalogue.chinni.fun
 
-USER: user.chinni.fun
 
-CART: cart.chinni.fun
+USER_HOST: user.chinni.fun
+
+
+CART_HOST: cart.chinni.fun
 
 
