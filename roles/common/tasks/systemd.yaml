@@ -1,3 +1,7 @@
+- name: Unmask the service if it is masked
+  ansible.builtin.command: "systemctl unmask {{ component }}"
+  ignore_errors: yes  # Optional, allows idempotency if it's not masked
+
 - name: copy the service
   ansible.builtin.template:
     src: "{{component}}.service.j2"
