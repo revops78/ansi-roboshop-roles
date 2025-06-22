@@ -7,7 +7,7 @@
 
 
 - name: Unmask the {{ component }} service
-  ansible.builtin.command: "systemctl unmask {{ component }}"
+  ansible.builtin.command: "systemctl unmask {{ component }}.service"
 
 - name: just for reload
   ansible.builtin.systemd_service:
